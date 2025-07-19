@@ -1,0 +1,4 @@
+# Nakama
+nakama-server/nakama/modules/*.so
+nakama-server/nakama/data/
+nakama-server/vendor/

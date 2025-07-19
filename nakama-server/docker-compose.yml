@@ -1,0 +1,59 @@
+networks:
+  nakama:
+
+volumes:
+  pg_data:
+
+services:
+  postgres:
+    image: postgres:${POSTGRES_VERSION}
+    container_name: ${POSTGRES_CONTAINER_NAME}
+    # TODO
+    environment:
+      - POSTGRES_DB=nakama
+      - POSTGRES_PASSWORD=localdb
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    expose:
+      - 5432
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres", "-d", "nakama"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - nakama
+
+  nakama:
+    image: registry.heroiclabs.com/heroiclabs/nakama:${NAKAMA_VERSION}
+    container_name: ${NAKAMA_CONTAINER_NAME}
+    links:
+      - "postgres:db"
+    # TODO: soporta migrate opción --config?
+    entrypoint:
+      - "/bin/sh"
+      - "-ecx"
+      - >
+        /nakama/nakama migrate up --database.address postgres:localdb@postgres:5432/nakama &&
+        exec /nakama/nakama --config /nakama/config.yml
+    volumes:
+      - ./nakama/data/:/nakama/data
+      - ./nakama/modules/:/nakama/modules
+      - ./nakama/config.yml:/nakama/config.yml
+    ports:
+      - "7349:7349"
+      - "7350:7350"
+      - "7351:7351"
+    depends_on:
+      postgres:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "/nakama/nakama", "healthcheck"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - nakama
+

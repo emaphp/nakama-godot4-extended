@@ -2,3 +2,7 @@
 nakama-server/nakama/modules/*.so
 nakama-server/nakama/data/
 nakama-server/vendor/
+
+# Godot 4+ specific ignores
+*/.godot/
+*/android/

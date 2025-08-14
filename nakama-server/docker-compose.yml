@@ -30,7 +30,6 @@ services:
     container_name: ${NAKAMA_CONTAINER_NAME}
     links:
       - "postgres:db"
-    # TODO: soporta migrate opción --config?
     entrypoint:
       - "/bin/sh"
       - "-ecx"
@@ -56,4 +55,3 @@ services:
     restart: unless-stopped
     networks:
       - nakama
-

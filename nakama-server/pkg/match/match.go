@@ -127,8 +127,7 @@ func (m *Match) MatchLoop(ctx context.Context, logger runtime.Logger, db *sql.DB
 				*matchstate.Positions[sender.GetUserId()] = *playerData
 			}
 
-			// TODO
-			matchstate.Names[sender.GetUserId()] = msg.Id
+			matchstate.Names[sender.GetUserId()] = msg.Name
 
 			// Setup initial state
 			initialState, err := msgs.MakeInitialStatePayload(matchstate)

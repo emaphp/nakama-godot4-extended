@@ -6,7 +6,35 @@
 
 This is a reimplementation of [Nakama Godot Demo](https://github.com/heroiclabs/nakama-godot-demo/) but for Godot 4. The original project has been modified to also include module development using the Go programming language.
 
+## Requirements ##
+
+Your system needs these tools installed:
+
+ - The Go Programming Language (>=1.24)
+ - Docker
+ - Docker Compose Plugin
+
 ## Setup ##
+
+### Build the server modules ###
+
+This steps builds the server modules. Compiled modules are stored in `nakama-server/nakama/modules`.
+
+```
+ cd nakama-server/
+ make build
+```
+
+### Run the server  ###
+
+This step initializes a PostgreSQL container and then runs Nakama. Nakama configuration can be modified in `nakama-server/nakama/config.yml`.
+
+```
+ cd nakama-server/
+ docker compose up -d postgres nakama
+```
+
+### Import Godot project ###
 
 [TODO]
 

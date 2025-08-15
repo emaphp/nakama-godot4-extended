@@ -3,6 +3,7 @@ package storage
 import (
 	"context"
 	"encoding/json"
+
 	"github.com/heroiclabs/nakama-common/runtime"
 )
 

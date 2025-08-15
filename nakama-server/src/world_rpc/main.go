@@ -3,9 +3,10 @@ package main
 import (
 	"context"
 	"database/sql"
+	"slices"
+
 	"nakama-server/pkg/match"
 	"nakama-server/pkg/storage"
-	"slices"
 
 	"github.com/heroiclabs/nakama-common/runtime"
 )
@@ -30,21 +31,19 @@ func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runti
 func getWorldId(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
 	matches, err := nk.MatchList(ctx, 1, false, "", nil, nil, "")
 	if err != nil {
-		logger.Warn("get_world_id -> MatchList: %s", err.Error())
+		logger.Warn("[RegisterMatch] error: %s", err.Error())
 		return "", err
 	}
 
 	if len(matches) == 0 {
 		m, err := nk.MatchCreate(ctx, match.MATCH_MODULE, match.GetDefaultParams())
 		if err != nil {
-			logger.Warn("get_world_id -> MatchCreate: %s", err.Error())
+			logger.Warn("[MatchCreate] error: %s", err.Error())
 			return "", err
 		}
-		logger.Warn("get_world_id -> CREATE")
 		return m, nil
 	}
 
-	logger.Warn("get_world_id -> FOUND")
 	return matches[0].MatchId, nil
 }
 

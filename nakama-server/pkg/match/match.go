@@ -15,28 +15,11 @@ import (
 )
 
 const (
-	MATCH_MODULE string = "world_control"
-
 	SPAWN_POSITION_X = 1800.0
 	SPAWN_POSITION_Y = 1280.0
 )
 
-type MatchRegistrar func(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule) (m runtime.Match, err error)
-
 type Match struct{}
-
-func newMatch(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule) (m runtime.Match, err error) {
-	return &Match{}, nil
-}
-
-func RegisterMatch() (string, MatchRegistrar) {
-	return MATCH_MODULE, newMatch
-}
-
-func GetDefaultParams() map[string]any {
-	params := map[string]any{}
-	return params
-}
 
 // When the match is initialized. Creates empty tables in the game state that will be populated by clients.
 func (m *Match) MatchInit(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, params map[string]interface{}) (interface{}, int, string) {

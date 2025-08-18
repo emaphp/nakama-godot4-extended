@@ -29,7 +29,7 @@ func InitModule(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runti
 }
 
 func getWorldId(ctx context.Context, logger runtime.Logger, db *sql.DB, nk runtime.NakamaModule, payload string) (string, error) {
-	matches, err := nk.MatchList(ctx, 1, false, "", nil, nil, "")
+	matches, err := nk.MatchList(ctx, 1, true, "", nil, nil, "")
 	if err != nil {
 		logger.Warn("[RegisterMatch] error: %s", err.Error())
 		return "", err

@@ -1,8 +1,7 @@
 module nakama-server
 
-go 1.24.5
+go 1.25.0
 
-require (
-	github.com/heroiclabs/nakama-common v1.40.0 // indirect
-	google.golang.org/protobuf v1.36.6 // indirect
-)
+require github.com/heroiclabs/nakama-common v1.41.0
+
+require google.golang.org/protobuf v1.36.8 // indirect
